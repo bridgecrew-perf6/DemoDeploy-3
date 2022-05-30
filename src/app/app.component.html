@@ -1,0 +1,88 @@
+<h2>Forms</h2>
+{{ userform.value | json }}
+<form #userform="ngForm"  >
+
+  <p >every fields are correctly filled = {{ userform.form.valid }} </p>
+
+  <div class="form-group">
+    <label>Name:</label>
+    <input type="text" required minlength="4" #name="ngModel" [class.is-invalid]="name.invalid && name.touched" 
+    class="form-control" name="username" [(ngModel)]="userModel.name">
+    <div *ngIf="name.errors && (name.valid || name.touched)">
+      <small style="color: red;" *ngIf="name.errors.required"> Please enter your name</small>
+      <small style="color: red;" *ngIf="name.errors.minlength">Name must be at least 4 characters long.</small>
+    </div>
+    
+</div>
+
+<div class="form-group">
+  <label>Phone</label>
+  <input type="tel" required #phone="ngModel" pattern="^\d{10}$" [class.is-invalid]="phone.invalid && phone.touched" 
+  class="form-control" name="phone" [(ngModel)]="userModel.phone">
+  <div *ngIf="phone.errors && (phone.valid || phone.touched)">
+      <small style="color: red;" *ngIf="phone.errors.required">Phone Number is Required</small>
+      <small style="color: red;" *ngIf="phone.errors.pattern">Phone Number Must be in 10 digits</small>
+  </div>
+</div>
+
+
+
+
+
+<div class="form-group">
+  <label>Age:</label>
+  <input type="tel" required #age="ngModel" [class.is-invalid]="age.invalid && age.touched" class="form-control" name="age" [(ngModel)]="userModel.age">
+  <small style="color: red;" [class.d-none]="age.valid || age.untouched">Please enter your age</small>
+</div>
+
+
+
+<div class="form-group" >
+  <label>Team:</label>
+  <br>
+  <select  required >
+    <option  value=""> Im Working with</option>
+    <option>{{ team[0] }}</option>
+    <option>{{ team[1] }}</option>
+    <option>{{ team[2] }}</option>
+    <option>{{ team[3] }}</option>
+  </select>
+  <br><small style="color: red;" [class.d-none]=" ">Please choose a topic</small>
+</div>
+
+<div>
+  <label>Gender:</label><br>
+  <div class="form-group" [class.is-invalid]="gender.touched && gender.invalid">
+    <input type="radio" required #gender="ngModel" value="male" name="gender" [(ngModel)]="userModel.gender"> Male
+    <input type="radio" required #gender="ngModel" value="Female" name="gender" [(ngModel)]="userModel.gender"> Female
+    <br><small style="color: red;" [class.d-none]="gender.valid || gender.untouched">This field is mandotory</small>
+    
+</div>
+</div>
+
+<div>
+  <label>Languages Known:</label><br>
+  <div class="checkbox">
+    <label>
+        <input type="checkbox" data-toggle="toggle">Angular<br>
+        <input type="checkbox" data-toggle="toggle">.Net<br>
+        <input type="checkbox" data-toggle="toggle">PHP<br>
+        <input type="checkbox" data-toggle="toggle">SAP-ABAP<br>
+    </label>
+    </div>
+</div>
+
+<div>
+  <label>Date of Birth:</label><br>
+  <input type="date">
+</div>
+
+<div>
+
+  <br>
+  <button [disabled]="userform.form.invalid" class="btn btn-primary" type="submit" >Submit Form</button>
+  <small style="color: red;" [class.d-none]="userform.form.valid">Check out the Fields and complete properly</small>
+
+</div>
+
+</form>
